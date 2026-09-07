@@ -1,0 +1,89 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===== THEME VARIABLES ===== */
+:root {
+  --bg-base: #0a0a0f;
+  --bg-card: #111318;
+  --bg-input: #0d0e13;
+  --text-primary: #ffffff;
+  --text-muted: #94a3b8;
+  --border-color: rgba(255, 255, 255, 0.08);
+  --border-hover: rgba(59, 130, 246, 0.45);
+  --grid-line: rgba(255, 255, 255, 0.03);
+}
+
+:root.light {
+  --bg-base: #f4f4f6;
+  --bg-card: #ffffff;
+  --bg-input: #ececef;
+  --text-primary: #0a0a0f;
+  --text-muted: #64748b;
+  --border-color: rgba(0, 0, 0, 0.08);
+  --border-hover: rgba(59, 130, 246, 0.4);
+  --grid-line: rgba(0, 0, 0, 0.03);
+}
+
+@layer base {
+  body {
+    @apply font-mono antialiased;
+    background-color: var(--bg-base);
+    color: var(--text-primary);
+  }
+}
+
+/* ===== GRID PATTERN ===== */
+.grid-bg {
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* ===== PULSING DOT ===== */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5); }
+  50% { opacity: 0.85; box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+}
+.pulse-dot { animation: pulse-dot 2s ease-in-out infinite; }
+
+/* ===== SKELETON SHIMMER ===== */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.skeleton {
+  background: linear-gradient(90deg, #1a1d24 25%, #262a33 50%, #1a1d24 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.12); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ===== CHEVRON ROTATION ===== */
+.chevron { transition: transform 250ms ease; }
+.chevron.open { transform: rotate(180deg); }
+
+/* ===== CARD EXPAND ===== */
+.expand-content {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 280ms ease;
+}
+.expand-content.open { grid-template-rows: 1fr; }
+.expand-content > .expand-inner { overflow: hidden; }
+
+/* ===== TOAST ===== */
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.toast-in { animation: toast-in 250ms ease forwards; }
