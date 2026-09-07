@@ -24,27 +24,25 @@ export async function GET(request: NextRequest, context: { params: Promise<{ ser
 
   const query = new URLSearchParams(request.nextUrl.searchParams)
   const paths = candidates[service] ?? [`/api/${service}`, `/api/v1/${service}`]
-  let lastStatus = 502
-  let lastBody = "Upstream API unavailable"
-
-  for (const path of paths) {
+  const attempts = await Promise.all(paths.map(async path => {
     try {
       const upstream = await fetch(`${upstreamBase}${path}?${query.toString()}`, {
         headers: { Accept: "application/json", "User-Agent": "BMW-APIs/1.0" },
-        signal: AbortSignal.timeout(25000),
+        signal: AbortSignal.timeout(8000),
         cache: "no-store",
       })
-      const body = await upstream.text()
-      lastStatus = upstream.status
-      lastBody = body
-      if (upstream.status === 404) continue
-      try { return NextResponse.json(JSON.parse(body), { status: upstream.status }) } catch { return new NextResponse(body, { status: upstream.status, headers: { "content-type": upstream.headers.get("content-type") ?? "text/plain" } }) }
+      return { path, status: upstream.status, body: await upstream.text() }
     } catch (error) {
-      lastBody = error instanceof Error ? error.message : "Upstream request failed"
+      return { path, status: 599, body: error instanceof Error ? error.message : "Upstream request failed" }
     }
+  }))
+
+  const result = attempts.find(attempt => attempt.status !== 404 && attempt.status !== 599) ?? attempts.find(attempt => attempt.status !== 404) ?? attempts[0]
+  if (result && result.status !== 599) {
+    try { return NextResponse.json(JSON.parse(result.body), { status: result.status }) } catch { return new NextResponse(result.body, { status: result.status, headers: { "content-type": "text/plain" } }) }
   }
 
-  return NextResponse.json({ status: false, error: "BMW API upstream did not return a result", upstream_status: lastStatus, details: lastBody.slice(0, 300) }, { status: 502 })
+  return NextResponse.json({ status: false, error: "BMW API upstream did not respond in time", upstream_status: result?.status ?? 502, details: result?.body.slice(0, 300) }, { status: 504 })
 }
 
 export const dynamic = "force-dynamic"
