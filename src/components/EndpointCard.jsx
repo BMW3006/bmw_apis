@@ -17,7 +17,7 @@ export default function EndpointCard({ endpoint, onToast }) {
     setLoading(true)
     setResponse(null)
     try {
-      const baseUrl = import.meta.env.VITE_API_BASE_URL || 'https://api.bmw-apis.example'
+      const baseUrl = import.meta.env.VITE_API_BASE_URL || ''
       const query = new URLSearchParams()
       endpoint.params.forEach((p) => {
         if (paramValues[p.name]) query.set(p.name, paramValues[p.name])

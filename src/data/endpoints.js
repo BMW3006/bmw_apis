@@ -7,11 +7,9 @@ export const endpoints = [
     category: 'downloader',
     description: 'Download photos, reels & stories from Instagram',
     params: [
-      { name: 'url', type: 'text', label: 'Instagram URL', placeholder: 'https://instagram.com/p/...' },
+      { name: 'url', type: 'text', label: 'Instagram URL', placeholder: 'https://www.instagram.com/p/...' },
     ],
-    options: [
-      { name: 'format', label: 'Format', choices: ['Auto', 'Video', 'Image'] },
-    ],
+    options: [],
   },
   {
     id: 'tiktok',
@@ -21,11 +19,9 @@ export const endpoints = [
     category: 'downloader',
     description: 'Download TikTok videos without watermark',
     params: [
-      { name: 'url', type: 'text', label: 'TikTok URL', placeholder: 'https://tiktok.com/@user/video/...' },
+      { name: 'url', type: 'text', label: 'TikTok URL', placeholder: 'https://www.tiktok.com/@user/video/...' },
     ],
-    options: [
-      { name: 'format', label: 'Format', choices: ['No Watermark', 'With Watermark', 'Audio Only'] },
-    ],
+    options: [],
   },
   {
     id: 'youtube',
@@ -33,12 +29,12 @@ export const endpoints = [
     name: 'YouTube Downloader',
     path: '/api/v1/download/youtube',
     category: 'downloader',
-    description: 'Download YouTube videos in various qualities',
+    description: 'Download YouTube videos via content-service worker',
     params: [
       { name: 'url', type: 'text', label: 'YouTube URL', placeholder: 'https://youtube.com/watch?v=...' },
     ],
     options: [
-      { name: 'quality', label: 'Quality', choices: ['1080p', '720p', '480p', '360p', 'Audio Only'] },
+      { name: 'format', label: 'Format', choices: ['mp4', 'mp3'] },
     ],
   },
   {
@@ -47,12 +43,13 @@ export const endpoints = [
     name: 'YouTube VIP Downloader',
     path: '/api/v1/download/youtube-vip',
     category: 'downloader',
-    description: 'Premium YouTube downloader — higher quality, no limits',
+    description: 'Premium YouTube downloader via SaveTube — higher quality, no limits',
     params: [
       { name: 'url', type: 'text', label: 'YouTube URL', placeholder: 'https://youtube.com/watch?v=...' },
     ],
     options: [
-      { name: 'quality', label: 'Quality', choices: ['4K', '1440p', '1080p', '720p', 'Audio Only'] },
+      { name: 'type', label: 'Type', choices: ['audio', 'video'] },
+      { name: 'quality', label: 'Quality', choices: ['320', '256', '128', '64'] },
     ],
   },
   {
@@ -65,9 +62,7 @@ export const endpoints = [
     params: [
       { name: 'url', type: 'text', label: 'Spotify URL', placeholder: 'https://open.spotify.com/track/...' },
     ],
-    options: [
-      { name: 'format', label: 'Format', choices: ['MP3 320kbps', 'MP3 128kbps', 'FLAC'] },
-    ],
+    options: [],
   },
   {
     id: 'threads',
@@ -91,9 +86,7 @@ export const endpoints = [
     params: [
       { name: 'url', type: 'text', label: 'Any Media URL', placeholder: 'https://...' },
     ],
-    options: [
-      { name: 'format', label: 'Format', choices: ['Auto', 'Video', 'Audio'] },
-    ],
+    options: [],
   },
 ]
 
