@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-geist);
+  --font-mono: var(--font-geist-mono);
+  --color-background: #090b0f;
+  --color-foreground: #f5f7fa;
+  --color-card: #101319;
+  --color-card-foreground: #f5f7fa;
+  --color-muted: #161a21;
+  --color-muted-foreground: #8a93a3;
+  --color-border: #242a34;
+  --color-primary: #3d8bfd;
+  --color-primary-foreground: #ffffff;
+  --color-success: #42d392;
+  --color-warning: #e9c46a;
+  --color-danger: #ed7777;
+}
+
+* { box-sizing: border-box; }
+html { background: #090b0f; }
+body { min-height: 100vh; background: #090b0f; color: #f5f7fa; font-family: var(--font-geist), sans-serif; }
+button, input { font: inherit; }
+button { cursor: pointer; }
+::selection { background: #3d8bfd55; }
+
+.grid-bg { background-image: linear-gradient(#ffffff04 1px, transparent 1px), linear-gradient(90deg, #ffffff04 1px, transparent 1px), radial-gradient(circle at 70% -10%, #1f6feb18, transparent 35%); background-size: 44px 44px, 44px 44px, auto; }
+.code { font-family: var(--font-geist-mono), monospace; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.spin { animation: spin .8s linear infinite; }
+@keyframes slide-in { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+.animate-in { animation: slide-in .18s ease-out; }
